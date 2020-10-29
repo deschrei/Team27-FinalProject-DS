@@ -5,16 +5,29 @@ var app = new Vue({
     activeMember: {},
     positionList: [],
     newMember: {},
-    membercertification: []
+    membercertification: [],
+    certificationList: []
   },
 
   created(){
     this.fetchMember();
     this.fetchPosition();
+    this.fetchCertification();
 
   },
 
   methods: {
+
+    fetchCertification: function(){
+      fetch('api/records/view_certifications.php')
+      .then(response => response.json())
+      .then(data => {
+        this.certificationList = data;
+        console.log(data);
+
+
+      });
+    },
 
     fetchMemberCertification(){
       fetch('api/records/view_member_certifications.php',{

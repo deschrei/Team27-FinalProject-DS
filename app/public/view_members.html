@@ -166,12 +166,12 @@
 
 
 
-      <!-- Edit Modal HTML -->
+      <!-- Add Modal HTML -->
     <div>
       <div id="addEmployeeModal" class="modal fade">
       	<div class="modal-dialog">
       		<div class="modal-content">
-      		   <form method="post" v-on:submit="createMember">
+      		   <form method="post" v-on:submit.prevent="createMember">
       				<div class="modal-header">
       					<h4 class="modal-title">Add New Member</h4>
       					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -253,6 +253,22 @@
                   <!-- Add id -->
                   <input type="text" v-model="newMember.email" class="form-control"  placeholder="" id="email">
                 </div>
+                <div class="form-group">
+                  <!-- Add label -->
+                  <label for="certificationID" >Certification</label>
+                  <!-- Add id -->
+                  <select id="certificationID" v-model="newMember.certificationID">
+                    <option v-for="certs in certificationList" :value="certs.certificationID">
+                      {{certs.certificationName}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <!-- Add label -->
+                  <label for="testDate">Date Certified</label>
+                  <!-- Add id -->
+                  <input type="text" v-model="newMember.testDate" class="form-control"  placeholder="" id="testDate">
+                </div>
       				</div>
       				<div class="modal-footer">
       					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -301,7 +317,7 @@
       <div id="deleteEmployeeModal" class="modal fade">
       	<div class="modal-dialog">
       		<div class="modal-content">
-      			<form v-on:submit = "deleteMember">
+      			<form v-on:submit.prevent = "deleteMember">
       				<div class="modal-header">
       					<h4 class="modal-title">Delete Employee</h4>
       					<button type="submit" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

@@ -5,10 +5,10 @@ Professor Tom Gregory
 */
 
 
-CREATE DATABASE OCFR;
+CREATE DATABASE ocfr;
 
 
-USE OCFR;
+USE ocfr;
 
 
 CREATE TABLE Position (
@@ -36,7 +36,7 @@ CREATE TABLE Person (
     email VARCHAR(255),
     isActive BOOLEAN,
     PRIMARY KEY(personID),
-    FOREIGN KEY(positionID) REFERENCES Position (positionID)
+    FOREIGN KEY(positionID) REFERENCES Position (positionID) ON DELETE CASCADE
 );
 
 
@@ -57,7 +57,7 @@ CREATE TABLE Test(
     testDate DATE,
     PRIMARY KEY (testID),
     FOREIGN KEY (personID) REFERENCES Person (personID),
-    FOREIGN KEY (certificationID) REFERENCES Certification (certificationID)
+    FOREIGN KEY (certificationID) REFERENCES Certification (certificationID) ON DELETE CASCADE
 );
 
 
@@ -83,7 +83,7 @@ AS
 SELECT Certification.certificationID, Certification.certificationAgency, Certification.certificationName, Certification.defaultExpiration, Person.personID, Person.firstName, Test.testID
 FROM Certification, Person, Test
 WHERE Person.personID = Test.personID
-AND Certification.certificationID = Test.certificationID
+AND Certification.certificationID = Test.certificationID;
 
 /* Dummy Data */
 /* Source: https://www.mockaroo.com/ */

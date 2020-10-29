@@ -17,12 +17,12 @@ $db = DbConnection::getConnection();
 
 // Step 2: Create & run the query
 // Note the use of parameterized statements to avoid injection
-$stmt2 = $db->prepare(
+$stmt = $db->prepare(
   'INSERT INTO Person (firstName, lastName, positionID, gender, address, dateOfBirth, workPhone, mobilePhone, startDate, radioNumber, stationNumber, email)
   VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'
 );
 
-$stmt2->execute([
+$stmt->execute([
   $_POST['firstName'],
   $_POST['lastName'],
   $_POST['positionID'],
@@ -38,8 +38,24 @@ $stmt2->execute([
 
 ]);
 
+
+
 // If needed, get auto-generated PK from DB
 $pk = $db->lastInsertId();
+
+
+$stmt2 = $db->prepare(
+  'INSERT INTO Test (personID, certificationID, testDate)
+  VALUES (?,?,?)'
+);
+
+$stmt2->execute([
+  $pk,
+  $_POST['certificationID'],
+  $_POST['testDate']
+
+
+]);
 
 // Step 4: Output
 // Here, instead of giving output, I'm redirecting to the SELECT API,

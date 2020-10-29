@@ -14,28 +14,23 @@ require 'common.php';
 
 // Step 1: Get a datase connection from our helper class
 $db = DbConnection::getConnection();
+$pk = $db->lastInsertId();
+
 
 // Step 2: Create & run the query
 // Note the use of parameterized statements to avoid injection
 $stmt2 = $db->prepare(
-  'DELETE FROM Test
-    WHERE personID = ?;'
+  'INSERT INTO Test (personID, certificationID, testDate)
+  VALUES (?,?,?)'
 );
 
 $stmt2->execute([
-  $_POST['personID']
+  $pk,
+  $_POST['certificationID'],
+  $_POST['testDate']
+
+
 ]);
-
-
-$stmt3 = $db->prepare(
-  'DELETE FROM Person
-    WHERE personID = ?;'
-);
-
-$stmt3->execute([
-  $_POST['personID']
-]);
-
 
 // If needed, get auto-generated PK from DB
 
@@ -43,3 +38,5 @@ $stmt3->execute([
 // Step 4: Output
 // Here, instead of giving output, I'm redirecting to the SELECT API,
 // just in case the data changed by entering it
+header('HTTP/1.1 303 See Other');
+header('Location: ../records/?id=' . $pk);
